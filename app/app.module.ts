@@ -1,25 +1,23 @@
 import { NgModule } from '@angular/core';
 
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { NativeScriptRouterModule } from 'nativescript-angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
+import { routes, navigatableComponents } from './app.routing';
+
 import { SharedModule } from './shared';
 
 @NgModule({
   imports: [
     NativeScriptModule,
-    AppRoutingModule,
+    NativeScriptRouterModule,
+    NativeScriptRouterModule.forRoot(routes),
     SharedModule
   ],
   declarations: [
     AppComponent,
-    HomeComponent,
-    AboutComponent,
-    ContactComponent
+    ...navigatableComponents
   ],
   bootstrap: [AppComponent]
 })

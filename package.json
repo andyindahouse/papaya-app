@@ -4,7 +4,10 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "org.nativescript.papayaapp"
+    "id": "org.nativescript.papayaapp",
+    "tns-android": {
+      "version": "3.0.1"
+    }
   },
   "dependencies": {
     "@angular/common": "~4.0.0",

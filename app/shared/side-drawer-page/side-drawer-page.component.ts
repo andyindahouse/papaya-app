@@ -1,18 +1,12 @@
-import {
-  Component, ViewChild, AfterViewInit, NgZone, OnDestroy
-} from '@angular/core';
+import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 import { Page } from 'ui/page';
 import { isAndroid, isIOS } from 'platform';
 import { ActionItem } from 'ui/action-bar';
-import {
-  RadSideDrawerComponent, SideDrawerType
-} from 'nativescript-telerik-ui/sidedrawer/angular';
-import {
-  PushTransition, SlideInOnTopTransition
-} from 'nativescript-telerik-ui/sidedrawer';
+import { RadSideDrawerComponent, SideDrawerType } from 'nativescript-telerik-ui/sidedrawer/angular';
+import { PushTransition, SlideInOnTopTransition } from 'nativescript-telerik-ui/sidedrawer';
 
 @Component({
   selector: 'side-drawer-page',
@@ -36,9 +30,11 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
    * Navigation Menu Items
    */
   navMenu: any[] = [
-    { name: 'Home', commands: ['/'] },
-    { name: 'About', commands: ['/about'] },
-    { name: 'Contact', commands: ['/contact'] }
+    { name: 'Mapa', commands: ['/'] },
+    { name: 'Logros', commands: ['/achievements'] },
+    { name: 'Puntos interes', commands: ['/monuments'] },
+    { name: 'Perfil', commands: ['/profile'] },        
+    { name: 'Feedback', commands: ['/feedback'] }
   ];
 
   private drawer: SideDrawerType;
