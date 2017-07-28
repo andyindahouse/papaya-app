@@ -5,8 +5,9 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
 
 import { AppComponent } from './app.component';
 import { routes, navigatableComponents } from './app.routing';
-
 import { SharedModule } from './shared';
+import { StateService } from './shared/state/state.service';
+import { StateFS } from './shared/state/state';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { SharedModule } from './shared';
     AppComponent,
     ...navigatableComponents
   ],
+  providers: [StateService, StateFS],
   bootstrap: [AppComponent]
 })
 export class AppModule {

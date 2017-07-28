@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
@@ -8,13 +8,17 @@ import { ActionItem } from 'ui/action-bar';
 import { RadSideDrawerComponent, SideDrawerType } from 'nativescript-telerik-ui/sidedrawer/angular';
 import { PushTransition, SlideInOnTopTransition } from 'nativescript-telerik-ui/sidedrawer';
 
+import { StateService } from '../state/state.service';
+
 @Component({
   selector: 'side-drawer-page',
-  templateUrl: 'modules/shared/side-drawer-page/side-drawer-page.component.html',
-  styleUrls: ['modules/shared/side-drawer-page/side-drawer-page.component.css']
+  templateUrl: 'shared/side-drawer-page/side-drawer-page.component.html',
+  styleUrls: ['shared/side-drawer-page/side-drawer-page.component.css'],
+  providers: [StateService]
 })
-export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
+export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(RadSideDrawerComponent) drawerComponent: RadSideDrawerComponent;
+  user: string;
 
   /**
    * On tap of any side-drawer item, hiding content if this flag is true.
@@ -43,10 +47,15 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
     private routerExtensions: RouterExtensions,
     private activatedRoute: ActivatedRoute,
     private page: Page,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private state: StateService
   ) {
     this.setActionBarIcon(this.page);
     this.setDrawerTransition();
+  }
+  ngOnInit() {
+    //console.log('state', this.state.getState().user);
+    //this.user = this.state.getState().user;
   }
 
   ngAfterViewInit() {

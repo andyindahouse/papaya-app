@@ -9,8 +9,8 @@ android {
   defaultConfig {  
     generatedDensities = []
     applicationId = "org.nativescript.papayaapp"  
-  }  
+  }
   aaptOptions {  
     additionalParameters "--no-version-vectors"  
   }  
-} 
+}
