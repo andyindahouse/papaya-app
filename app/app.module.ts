@@ -12,8 +12,6 @@ import { reducer } from './shared/reducers';
 
 import { AppComponent } from './app.component';
 import { routes, navigatableComponents } from './app.routing';
-import { StateService } from './shared/state/state.service';
-import { StateFS } from './shared/state/state';
   
 @NgModule({
   imports: [
@@ -29,7 +27,6 @@ import { StateFS } from './shared/state/state';
     BorderlessBtnDirective,
     ...navigatableComponents
   ],
-  providers: [StateService, StateFS],
   bootstrap: [AppComponent]
 })
 export class AppModule {

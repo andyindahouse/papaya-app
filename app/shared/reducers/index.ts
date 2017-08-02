@@ -31,6 +31,7 @@ import { combineReducers } from '@ngrx/store';
  */
 import * as fromUser from './user';
 import * as fromMonuments from './monuments';
+import * as fromLogMonitor from './log-monitor';
 
 
 /**
@@ -54,6 +55,7 @@ export interface State {
 const reducers = {
   user: fromUser.reducer,
   monuments: fromMonuments.reducer,
+  logMonitor: fromLogMonitor.reducer
   // router: fromRouter.routerReducer,
 };
 

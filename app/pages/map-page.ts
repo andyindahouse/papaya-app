@@ -5,8 +5,6 @@ import { isEnabled, enableLocationRequest, getCurrentLocation, watchLocation, di
 import { registerElement } from "nativescript-angular/element-registry";
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 
-import { StateService } from '../shared/state/state.service'
-
 // Important - must register MapView plugin in order to use in Angular templates
 registerElement("MapView", () => MapView);
 
@@ -47,10 +45,10 @@ export class MapComponent implements OnInit {
 
 	lastCamera: String;
 
-	constructor(private state: StateService) { }	
+	constructor() { }	
 	
 	ngOnInit() {
-		console.log('ngOnInit map', this.state.getState());
+		console.log('ngOnInit map');
 	}
 
 	refreshLocation(){
