@@ -8,17 +8,20 @@ import { ActionItem } from 'ui/action-bar';
 import { RadSideDrawerComponent, SideDrawerType } from 'nativescript-telerik-ui/sidedrawer/angular';
 import { PushTransition, SlideInOnTopTransition } from 'nativescript-telerik-ui/sidedrawer';
 
-import { StateService } from '../state/state.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import * as fromRoot from '../reducers';
+import { User } from '../models/user';
+
 
 @Component({
   selector: 'side-drawer-page',
   templateUrl: 'shared/side-drawer-page/side-drawer-page.component.html',
-  styleUrls: ['shared/side-drawer-page/side-drawer-page.component.css'],
-  providers: [StateService]
+  styleUrls: ['shared/side-drawer-page/side-drawer-page.component.css']
 })
 export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(RadSideDrawerComponent) drawerComponent: RadSideDrawerComponent;
-  user: string;
+  user$: Observable<User>;
 
   /**
    * On tap of any side-drawer item, hiding content if this flag is true.
@@ -48,14 +51,16 @@ export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy
     private activatedRoute: ActivatedRoute,
     private page: Page,
     private ngZone: NgZone,
-    private state: StateService
+    private store: Store<fromRoot.State>
   ) {
+    this.user$ = store.select('user');
     this.setActionBarIcon(this.page);
     this.setDrawerTransition();
   }
   ngOnInit() {
     //console.log('state', this.state.getState().user);
     //this.user = this.state.getState().user;
+    console.log('ngOnInit SideDrawerPage'); 
   }
 
   ngAfterViewInit() {

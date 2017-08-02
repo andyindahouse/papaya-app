@@ -7,7 +7,7 @@
       </Image>
       <Label
           class="sidedrawer-header-brand"
-          [text]="user">
+          [text]="(user$ | async).name">
       </Label>
     </StackLayout>
     <ScrollView>

@@ -1,13 +1,12 @@
 import { knownFolders, File, Folder, path } from 'tns-core-modules/file-system'
 
-export interface StateDao {
+export interface UserDao {
   read()
   write(data: string)
 }
 
-export class StateFS implements StateDao {
-
-    fileName: string = 'state.json';
+export class StateFS implements UserDao {
+    fileName: string = 'user.json';
     documents: Folder = knownFolders.documents();
     file: File = this.documents.getFile(this.fileName);  
 
@@ -18,5 +17,4 @@ export class StateFS implements StateDao {
     write(data): Promise<any>{
         return this.file.writeText(data)
     }
-
 }

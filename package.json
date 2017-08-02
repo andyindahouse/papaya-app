@@ -18,6 +18,8 @@
     "@angular/platform-browser": "~4.0.0",
     "@angular/platform-browser-dynamic": "~4.0.0",
     "@angular/router": "~4.0.0",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/store": "^2.2.3",
     "nativescript-angular": "~3.0.0",
     "nativescript-geolocation": "^3.0.0",
     "nativescript-google-maps-sdk": "^2.3.2",
