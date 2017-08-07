@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './shared/reducers';
 
 import { AppComponent } from './app.component';
+import { MonumentsService } from './shared/monuments.service';
 import { routes, navigatableComponents } from './app.routing';
   
 @NgModule({
@@ -27,7 +28,8 @@ import { routes, navigatableComponents } from './app.routing';
     BorderlessBtnDirective,
     ...navigatableComponents
   ],
-  bootstrap: [AppComponent]
+  providers: [ MonumentsService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule {
 

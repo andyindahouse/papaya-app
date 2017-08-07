@@ -13,22 +13,19 @@ export const initialState: State = {
   selectedMonumentId: null
 };
 
-export const MONUMENTS_LOAD = '[Monuments] Load';
+export const MONUMENTS_UPDATE = '[Monuments] Update';
 export const MONUMENTS_LOAD_COMPLETE = '[Monuments] Load Complete';
 export const MONUMENTS_SELECT = '[Monuments] Select';
 
 
 export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
-    case MONUMENTS_LOAD_COMPLETE: {
+    case MONUMENTS_UPDATE: {
       const monuments = action.payload;
       return {
         ...state,
         monuments: [...monuments]
       };
-    }
-    case MONUMENTS_LOAD: {
-      return state;
     }
     case MONUMENTS_SELECT: {
       return {
@@ -52,6 +49,8 @@ export function reducer(state = initialState, action: Action): State {
  */
 
 export const getMonuments = (state: State) => state.monuments;
+export const getSelectedMonumentId = (state: State) => state.monuments;
+
 
 // export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
 //   return entities[selectedId];

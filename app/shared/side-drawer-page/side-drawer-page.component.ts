@@ -13,7 +13,6 @@ import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import { User } from '../models/user';
 
-
 @Component({
   selector: 'side-drawer-page',
   templateUrl: 'shared/side-drawer-page/side-drawer-page.component.html',
@@ -40,7 +39,8 @@ export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy
     { name: 'Mapa', commands: ['/'] },
     { name: 'Logros', commands: ['/achievements'] },
     { name: 'Puntos interes', commands: ['/monuments'] },
-    { name: 'Perfil', commands: ['/profile'] },        
+    { name: 'Perfil', commands: ['/profile'] },
+    { name: '[oculta] Load Monu', commands: ['/load-monu'] },
     { name: 'Feedback', commands: ['/feedback'] }
   ];
 
@@ -58,8 +58,6 @@ export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy
     this.setDrawerTransition();
   }
   ngOnInit() {
-    //console.log('state', this.state.getState().user);
-    //this.user = this.state.getState().user;
     console.log('ngOnInit SideDrawerPage'); 
   }
 

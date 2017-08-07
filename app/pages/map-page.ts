@@ -72,7 +72,7 @@ export class MapComponent implements OnInit {
 
 	setCurrentLocation() {
 		getCurrentLocation({desiredAccuracy: Accuracy.high, updateDistance: 10, timeout: 20000})
-			.then((e) => {
+			.then((e: Location) => {
 				this.currentLocation = e;
 				this.refreshLocation();
 				this.renderMarker(this.currentLocation);

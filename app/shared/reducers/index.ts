@@ -1,4 +1,4 @@
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 import { ActionReducer } from '@ngrx/store';
 // import * as fromRouter from '@ngrx/router-store';
 
@@ -65,6 +65,11 @@ export function reducer(state: any, action: any) {
     return productionReducer(state, action);
 }
 
+export const getUser = (state: State) => state.user;
+export const getMonuments = (state: State) => state.monuments;
+
+
+export const getMonumentsValues = createSelector(getMonuments, fromMonuments.getMonuments);
 
 // /**
 //  * A selector function is a map function factory. We pass it parameters and it

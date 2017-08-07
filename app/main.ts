@@ -4,10 +4,7 @@ import firebase = require('nativescript-plugin-firebase');
 
 import { AppModule } from "./app.module";
 
-firebase.init({
-  // Optionally pass in properties for database, authentication and cloud messaging,
-  // see their respective docs.
-})
+firebase.init({})
   .then(
     (instance) => {
       console.log("firebase.init done");
