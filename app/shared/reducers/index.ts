@@ -70,7 +70,7 @@ export const getMonuments = (state: State) => state.monuments;
 
 
 export const getMonumentsValues = createSelector(getMonuments, fromMonuments.getMonuments);
-
+export const getSelectedMonument = createSelector(getMonuments, fromMonuments.getSelected);
 // /**
 //  * A selector function is a map function factory. We pass it parameters and it
 //  * returns a function that maps from the larger state tree into a smaller

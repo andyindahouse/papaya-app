@@ -1,4 +1,4 @@
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 import { Monument } from '../models/monument';
 import { Achievement } from '../models/achievement';
 import { Action } from '@ngrx/store';
@@ -49,7 +49,10 @@ export function reducer(state = initialState, action: Action): State {
  */
 
 export const getMonuments = (state: State) => state.monuments;
-export const getSelectedMonumentId = (state: State) => state.monuments;
+export const getSelectedMonumentId = (state: State) => state.selectedMonumentId;
+export const getSelected = createSelector(getMonuments, getSelectedMonumentId, (monuments, selectedId) => {
+  return monuments[selectedId];
+});
 
 
 // export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {

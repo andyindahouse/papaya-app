@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { RouterExtensions } from "nativescript-angular/router";
+
 
 import * as fromRoot from '../shared/reducers';
-import { Monument } from '../shared/models/monument'
+import { MONUMENTS_SELECT } from '../shared/reducers/monuments';
+import { Monument } from '../shared/models/monument';
 
 @Component({
 	selector: 'pay-monuments',
@@ -43,7 +46,7 @@ import { Monument } from '../shared/models/monument'
 export class MonumentsListComponent implements OnInit {
 	monuments$: Observable<Array<Monument>>;
 
-	constructor(private store: Store<fromRoot.State>) {
+	constructor(private store: Store<fromRoot.State>, private routerExtensions: RouterExtensions) {
 		this.monuments$ = store.select(fromRoot.getMonumentsValues);
 	}
 
@@ -52,6 +55,8 @@ export class MonumentsListComponent implements OnInit {
 	}
 
 	onMonumentTap(args) {
+		this.routerExtensions.navigate(['/monuments', args.index]);
+		this.store.dispatch({ type: MONUMENTS_SELECT, payload: args.index })
 		console.log("------------------------ ItemTapped: " + args.index);
 	}
 }

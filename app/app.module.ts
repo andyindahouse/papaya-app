@@ -13,12 +13,14 @@ import { reducer } from './shared/reducers';
 import { AppComponent } from './app.component';
 import { MonumentsService } from './shared/monuments.service';
 import { routes, navigatableComponents } from './app.routing';
+import { ComponentsModule } from './components';
   
 @NgModule({
   imports: [
     NativeScriptModule,
     NativeScriptUISideDrawerModule,
     NativeScriptRouterModule,
+    ComponentsModule,
     NativeScriptRouterModule.forRoot(routes),
     StoreModule.provideStore(reducer)
   ],
