@@ -12,10 +12,12 @@ import { Monument } from '../shared/models/monument'
   template: `
     <ActionBar title="{{(monument$ | async).name}}"></ActionBar>
     <side-drawer-page>
+    <ScrollView>
       <StackLayout>
         <detail-monument [monument]="monument$ | async"></detail-monument>
         <Button text="¡Empieza la actividad!" [nsRouterLink]="['']" pageTransition="flip"></Button>
       </StackLayout>
+    </ScrollView>
     </side-drawer-page>
   `
 })

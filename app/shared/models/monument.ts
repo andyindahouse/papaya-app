@@ -1,6 +1,7 @@
 import { Location } from "nativescript-geolocation";
 
 export interface Monument {
+  id: string,
   name: string,
   image: string,
   desc: string,

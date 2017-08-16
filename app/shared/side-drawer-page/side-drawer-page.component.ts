@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
@@ -18,7 +18,7 @@ import { User } from '../models/user';
   templateUrl: 'shared/side-drawer-page/side-drawer-page.component.html',
   styleUrls: ['shared/side-drawer-page/side-drawer-page.component.css']
 })
-export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy {
+export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild(RadSideDrawerComponent) drawerComponent: RadSideDrawerComponent;
   user$: Observable<User>;
 
@@ -37,7 +37,6 @@ export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy
    */
   navMenu: any[] = [
     { name: 'Mapa', commands: ['/'] },
-    { name: 'Logros', commands: ['/achievements'] },
     { name: 'Puntos interes', commands: ['/monuments'] },
     { name: 'Perfil', commands: ['/profile'] },
     { name: '[oculta] Load Monu', commands: ['/load-monu'] },
@@ -56,9 +55,6 @@ export class SideDrawerPageComponent implements AfterViewInit, OnInit, OnDestroy
     this.user$ = store.select('user');
     this.setActionBarIcon(this.page);
     this.setDrawerTransition();
-  }
-  ngOnInit() {
-    console.log('ngOnInit SideDrawerPage'); 
   }
 
   ngAfterViewInit() {

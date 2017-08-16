@@ -26,18 +26,18 @@ export class LoadMonuComponent implements OnInit {
   ngOnInit() { }
 
   onTap() {
-    firebase.setValue(
-      "/monuments",
-      monuments
-    ).then(
-      function (result: any) {
-        return 'Monuments added to your wishlist!';
-      },
-      function (errorMessage: any) {
-        console.log(errorMessage);
+    monuments.forEach(e => {
+      firebase.push(
+        "/monuments",
+        e
+      ).then(
+        function (result: any) {
+          return e.name + ' added to your wishlist!';
+        },
+        function (errorMessage: any) {          
+          console.log('load monuments error:' + errorMessage);
       }); 
-
-
+    });
 
   }
 }

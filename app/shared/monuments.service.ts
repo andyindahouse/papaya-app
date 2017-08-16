@@ -12,9 +12,15 @@ export class MonumentsService {
   constructor(private store: Store<fromRoot.State>, private ngZone: NgZone) { }
 
   syncMonuments() {
-    firebase.addValueEventListener((res) => {
+    firebase.addValueEventListener(({ value: dataMonuments }) => {
+      const monuments = Object.keys(dataMonuments).map((idMonument) => {
+        return {
+          ...dataMonuments[idMonument],
+          id: idMonument
+        }
+      });
       this.ngZone.run(() => {
-        this.store.dispatch({ type: MONUMENTS_UPDATE, payload: res.value });
+        this.store.dispatch({ type: MONUMENTS_UPDATE, payload: monuments });
       });
     }, this.monumentsPath);
   }

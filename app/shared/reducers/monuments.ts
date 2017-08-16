@@ -13,9 +13,11 @@ export const initialState: State = {
   selectedMonumentId: null
 };
 
-export const MONUMENTS_UPDATE = '[Monuments] Update';
-export const MONUMENTS_LOAD_COMPLETE = '[Monuments] Load Complete';
-export const MONUMENTS_SELECT = '[Monuments] Select';
+export const MONUMENTS_UPDATE =          '[Monuments] Update';
+export const MONUMENTS_LOAD_COMPLETE =   '[Monuments] Load complete';
+export const MONUMENTS_SELECT =          '[Monuments] Select';
+export const MONUMENTS_UPDATE_DISTANCE = '[Monuments] Update distance';
+
 
 
 export function reducer(state = initialState, action: Action): State {
@@ -32,6 +34,19 @@ export function reducer(state = initialState, action: Action): State {
         ...state,
         selectedMonumentId: action.payload
       };
+    }
+    case MONUMENTS_UPDATE_DISTANCE: {      
+      const monument = state.monuments.find(e => e.id === action.payload.id);
+      const indexMonument = state.monuments.indexOf(monument);
+      state.monuments = state.monuments.splice(indexMonument, 1);
+      const newMonument = {
+        ...monument,
+        distance: action.payload.distance
+      };
+      return {
+        ...state,
+        monuments: [...state.monuments, newMonument]
+      }
     }
     default: {
       return state;
@@ -51,7 +66,7 @@ export function reducer(state = initialState, action: Action): State {
 export const getMonuments = (state: State) => state.monuments;
 export const getSelectedMonumentId = (state: State) => state.selectedMonumentId;
 export const getSelected = createSelector(getMonuments, getSelectedMonumentId, (monuments, selectedId) => {
-  return monuments[selectedId];
+  return monuments.find(e => e.id === selectedId);
 });
 
 

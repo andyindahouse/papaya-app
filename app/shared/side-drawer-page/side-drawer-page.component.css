@@ -1,6 +1,7 @@
 .sidedrawer-header {
   padding-top: 25;
   padding-bottom: 25;
+  height: 30%;
   background-color: #333;
 }
 
@@ -11,6 +12,7 @@
 .sidedrawer-header .sidedrawer-header-brand {
   font-size: 18;
   color: #fff;
+  width: 100%;
 }
 
 .sidedrawer-content .sidedrawer-list-item-text {

@@ -6,33 +6,55 @@ import { Action } from '@ngrx/store';
 export interface State {
   name: string;
   achievements:Achievement[];
+  idMonumentsVisited: string[]
 };
 
 export const initialState: State = {
   name: 'Papayo',  
-  achievements: []
+  achievements: [
+    { name: 'Medalla 1', image: 'res://pizza' },
+    { name: 'Medalla 2', image: 'res://pizza' }     
+  ],
+  idMonumentsVisited: []
 };
 
 export const USER_SET_NAME =          '[User] Set name';
 export const USER_LOAD =              '[User] Load';
-export const USER_LOAD_COMPLETE =     '[User] Load Complete';
+export const USER_LOAD_COMPLETE =     '[User] Load complete';
+export const USER_ADD_ACHIEVEMENT =   '[User] Add achievement';
+export const USER_ADD_MONUMENT =      '[User] Add monument';
+
 
 export function reducer(state = initialState, action: Action): State {
   switch (action.type) {
-    case USER_SET_NAME:
+    case USER_SET_NAME: {
       return { 
         ...state, 
         name: action.payload 
       };
+    }
     case USER_LOAD_COMPLETE: {
       const user = action.payload;
       return {
          name: user.name,
-         achievements: [ ...user.achievements ]
+         achievements: [ ...user.achievements ],
+         idMonumentsVisited: [ ...user.idMonumentsVisited ]
       };
     }
     case USER_LOAD: {
       return state;
+    }
+    case USER_ADD_ACHIEVEMENT: {
+      return {
+        ...state,
+        achievements: [ ...state.achievements, action.payload ]
+      };
+    }
+    case USER_ADD_MONUMENT: {
+      return {
+        ...state,
+        idMonumentsVisited: [...state.idMonumentsVisited, action.payload]
+      };
     }
     default: {
       return state;

@@ -12,6 +12,8 @@ import { reducer } from './shared/reducers';
 
 import { AppComponent } from './app.component';
 import { MonumentsService } from './shared/monuments.service';
+import { UserDAO } from './shared/user.dao';
+import { UserService } from './shared/user.service';
 import { routes, navigatableComponents } from './app.routing';
 import { ComponentsModule } from './components';
   
@@ -30,7 +32,7 @@ import { ComponentsModule } from './components';
     BorderlessBtnDirective,
     ...navigatableComponents
   ],
-  providers: [ MonumentsService ],
+  providers: [ MonumentsService, UserService, UserDAO ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

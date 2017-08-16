@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { RouterExtensions } from "nativescript-angular/router";
@@ -32,10 +32,10 @@ import { Monument } from '../shared/models/monument';
 					 	(itemTap)="onMonumentTap($event)"
 						[items]="monuments$ | async">
 					<ng-template let-monument="item">
-						<StackLayout>
+						<StackLayout id="{{monument.id}}">
 								<Image src="{{monument.image}}"></Image>
 								<Label class="primary-label" [text]="monument.name"></Label>
-								<Label class="secondary-label" text="distance: 956m"></Label>								
+								<Label class="secondary-label" [text]="monument.distance"></Label>			
 						</StackLayout>
 					</ng-template>
 				</ListView>
@@ -43,20 +43,16 @@ import { Monument } from '../shared/models/monument';
 		</side-drawer-page>
 	`
 })
-export class MonumentsListComponent implements OnInit {
+export class MonumentsListComponent {
 	monuments$: Observable<Array<Monument>>;
 
 	constructor(private store: Store<fromRoot.State>, private routerExtensions: RouterExtensions) {
 		this.monuments$ = store.select(fromRoot.getMonumentsValues);
 	}
 
-	ngOnInit() {
-		console.log(this.monuments$);
-	}
-
 	onMonumentTap(args) {
-		this.routerExtensions.navigate(['/monuments', args.index]);
-		this.store.dispatch({ type: MONUMENTS_SELECT, payload: args.index })
-		console.log("------------------------ ItemTapped: " + args.index);
+		const idMonument = args.view.id;
+		this.routerExtensions.navigate(['/monuments', idMonument]);
+		this.store.dispatch({ type: MONUMENTS_SELECT, payload: idMonument });
 	}
 }
