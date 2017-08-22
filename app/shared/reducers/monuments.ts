@@ -35,10 +35,11 @@ export function reducer(state = initialState, action: Action): State {
         selectedMonumentId: action.payload
       };
     }
-    case MONUMENTS_UPDATE_DISTANCE: {      
+    case MONUMENTS_UPDATE_DISTANCE: {
+      // Maybe this is better to do it for array of monuments... :\    
       const monument = state.monuments.find(e => e.id === action.payload.id);
       const indexMonument = state.monuments.indexOf(monument);
-      state.monuments = state.monuments.splice(indexMonument, 1);
+      state.monuments.splice(indexMonument, 1);
       const newMonument = {
         ...monument,
         distance: action.payload.distance

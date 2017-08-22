@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../shared/reducers';
 import { MONUMENTS_UPDATE_DISTANCE, MONUMENTS_SELECT } from '../shared/reducers/monuments';
 import { Observable } from 'rxjs/Observable';
+import "rxjs/add/operator/take";
 
 import { Monument } from '../shared/models/monument';
 
@@ -62,25 +63,10 @@ export class MapComponent implements OnInit {
 		console.log('ngOnInit map');
 	}
 
-	refreshLocation() {
-		if(this.watchId) geolocation.clearWatch(this.watchId);
-		this.watchId = geolocation.watchLocation(loc => {
-			this.currentLocation = loc;
-			this.monumentIdsAndMarkers.forEach(({ id, marker, location}) => {
-				const distance = this.getMonumentDistance(location);					
-				this.updateMarkers(marker, distance);
-				// this.updateDistanceMonument(id, distance);
-			});
-
-    }, (e) => {
-      console.log("Error refresh location: " + e.message);
-    }, {desiredAccuracy: Accuracy.high, updateDistance: 3, minimumUpdateTime : 1000});
-	}
-		
 	onMapReady(event) {
 		this.mapView = event.object;
 		permissions.requestPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, 'Es obligatorio para mostrarte los monumentos cercanos a tu localización')
-			.then(() => {				
+			.then(() => {
 				this.mapView.gMap.setMyLocationEnabled(true);
 				this.setCurrentLocation();
 			})
@@ -94,11 +80,11 @@ export class MapComponent implements OnInit {
 	}
 
 	setCurrentLocation() {
-		geolocation.getCurrentLocation({desiredAccuracy: Accuracy.high, updateDistance: 10, timeout: 30000})
+		geolocation.getCurrentLocation({ desiredAccuracy: Accuracy.high, updateDistance: 10, timeout: 30000 })
 			.then((e: Location) => {
 				this.currentLocation = e;
 				this.setMonumentsLocation();
-				this.refreshLocation(); 
+				this.refreshLocation();
 			})
 			.catch(e => {
 				dialogs.alert({
@@ -108,9 +94,26 @@ export class MapComponent implements OnInit {
 			});
 	}
 
+	refreshLocation() {
+		if(this.watchId) geolocation.clearWatch(this.watchId);
+		this.watchId = geolocation.watchLocation(loc => {
+			this.currentLocation = loc;
+			this.monumentIdsAndMarkers.forEach(({ id, marker, location}) => {
+				const distance = this.getMonumentDistance(location);					
+				this.updateMarkers(marker, distance);
+				this.updateDistanceMonument(id, distance);
+			});
+
+    }, (e) => {
+      console.log("Error refresh location: " + e.message);
+    }, {desiredAccuracy: Accuracy.high, updateDistance: 3, minimumUpdateTime : 1000});
+	}
+
 	setMonumentsLocation() {
 		const dataSub = this.store.select(fromRoot.getMonumentsValues)
+			.take(1)		
 			.subscribe(monuments => {
+				console.log('>>>>>>>>>>>> LOAD MONUMENTS')
 				monuments.forEach(e => {
 					const distance = this.getMonumentDistance(e.location);				
 					const marker = this.renderMarker({
@@ -123,7 +126,7 @@ export class MapComponent implements OnInit {
 						location: e.location,
 						marker
 					});
-					// this.updateDistanceMonument(e.id, distance);
+					this.updateDistanceMonument(e.id, distance);
 				});
 			});
 		//dataSub.unsubscribe();

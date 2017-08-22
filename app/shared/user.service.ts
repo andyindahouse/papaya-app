@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/of';
 
 import * as fromRoot from '../shared/reducers';
 import { 
@@ -13,6 +11,9 @@ import {
 } from '../shared/reducers/user';
 import { UserDAO } from './user.dao';
 import { Achievement } from './models/achievement';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class UserService {

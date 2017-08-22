@@ -4,6 +4,7 @@ import { MonumentsListComponent } from './pages/monuments-list-page';
 import { DetailMonumentPageComponent } from './pages/detail-monument-page';
 import { ProfileComponent } from './pages/profile-page';
 import { LoadMonuComponent } from './pages/load-monu-page';
+import { QuizPageComponent } from './pages/quiz-page';
 
 
 export const routes = [
@@ -11,7 +12,7 @@ export const routes = [
   { path: 'profile', component: ProfileComponent },   
   { path: 'monuments', component: MonumentsListComponent },
   { path: 'monuments/:id', component: DetailMonumentPageComponent },
-  { path: 'monuments/:id/questionary/:step', component: DetailMonumentPageComponent },  
+  { path: 'monuments/:id/quiz', component: QuizPageComponent },  
   { path: 'load-monu', component: LoadMonuComponent },  
   { path: 'feedback', component: FeedbackComponent }    
 ];
@@ -22,5 +23,6 @@ export const navigatableComponents = [
   MonumentsListComponent,
   DetailMonumentPageComponent,
   FeedbackComponent,
-  LoadMonuComponent
+  LoadMonuComponent,
+  QuizPageComponent
 ];

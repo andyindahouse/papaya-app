@@ -1,4 +1,5 @@
 import { Location } from "nativescript-geolocation";
+import { Question } from './question';
 
 export interface Monument {
   id: string,
@@ -7,5 +8,7 @@ export interface Monument {
   desc: string,
   location: Location,
   markerImg: string,
-  status: string
+  status: string,
+  distance?: string,
+  quiz: Question[]
 }

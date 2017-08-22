@@ -13,15 +13,19 @@ export class MonumentsService {
 
   syncMonuments() {
     firebase.addValueEventListener(({ value: dataMonuments }) => {
-      const monuments = Object.keys(dataMonuments).map((idMonument) => {
-        return {
-          ...dataMonuments[idMonument],
-          id: idMonument
-        }
-      });
-      this.ngZone.run(() => {
-        this.store.dispatch({ type: MONUMENTS_UPDATE, payload: monuments });
-      });
+      if(dataMonuments) {
+        const monuments = Object.keys(dataMonuments).map((idMonument) => {
+          return {
+            ...dataMonuments[idMonument],
+            id: idMonument
+          }
+        });
+        this.ngZone.run(() => {
+          if(monuments && monuments.length > 0) {
+            this.store.dispatch({ type: MONUMENTS_UPDATE, payload: monuments });
+          }
+        });
+      }
     }, this.monumentsPath);
   }
 
