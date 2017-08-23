@@ -10,5 +10,6 @@ export interface Monument {
   markerImg: string,
   status: string,
   distance?: string,
-  quiz: Question[]
+  quiz: Question[],
+  quizAchievement: string
 }

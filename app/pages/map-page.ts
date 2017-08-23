@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Accuracy } from 'tns-core-modules/ui/enums';
 import { Image } from 'tns-core-modules/ui/image';
 import * as dialogs from "ui/dialogs";
@@ -7,7 +7,7 @@ import { Location } from "nativescript-geolocation/nativescript-geolocation-comm
 import { registerElement } from "nativescript-angular/element-registry";
 import * as permissions from "nativescript-permissions";
 import { RouterExtensions } from "nativescript-angular/router";
-import { MapView, Marker, Position, UISettings } from 'nativescript-google-maps-sdk';
+import { MapView, Marker, Position, UISettings, Style } from 'nativescript-google-maps-sdk';
 
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../shared/reducers';
@@ -41,7 +41,7 @@ declare var android: any;
 		</side-drawer-page>
 	`
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
 	monuments$: Observable<Monument[]>;
 	monumentIdsAndMarkers = [];
 	watchId = null;
@@ -57,14 +57,13 @@ export class MapComponent implements OnInit {
 
 	lastCamera: String;
 
+	currentMapStyle = [{"featureType": "poi.business", "stylers": [{ "visibility": "off" }]},	{	"featureType": "poi.park", "elementType": "labels.text", "stylers": [{ "visibility": "off" }]}];
+
 	constructor(private store: Store<fromRoot.State>, private routerExtensions: RouterExtensions) { }	
-	
-	ngOnInit() {
-		console.log('ngOnInit map');
-	}
 
 	onMapReady(event) {
 		this.mapView = event.object;
+		this.mapView.setStyle(<Style>this.currentMapStyle);
 		permissions.requestPermission(android.Manifest.permission.ACCESS_FINE_LOCATION, 'Es obligatorio para mostrarte los monumentos cercanos a tu localización')
 			.then(() => {
 				this.mapView.gMap.setMyLocationEnabled(true);
@@ -113,7 +112,6 @@ export class MapComponent implements OnInit {
 		const dataSub = this.store.select(fromRoot.getMonumentsValues)
 			.take(1)		
 			.subscribe(monuments => {
-				console.log('>>>>>>>>>>>> LOAD MONUMENTS')
 				monuments.forEach(e => {
 					const distance = this.getMonumentDistance(e.location);				
 					const marker = this.renderMarker({
@@ -129,21 +127,19 @@ export class MapComponent implements OnInit {
 					this.updateDistanceMonument(e.id, distance);
 				});
 			});
-		//dataSub.unsubscribe();
 	}
 
 	updateMarkers(marker, distance) {
 		// update icos and label
 		const distanceNum = parseInt(distance);
-		let msg = 'Acercate más, min: 20m';
 		if(distanceNum <= 20)  {
-			msg = 'A tu alcance';
-			marker.icon = 'pizza';
+			marker.snippet = '¡Comienza el desafío!';
+			marker.icon = 'target';
 		} else {
-			marker.icon = 'place';			
+			marker.icon = 'flag';			
+			marker.snippet = this.formatDistance(distance) + ' ' + 'Fuera de alcance';
 		}
 
-		marker.snippet = this.formatDistance(distance) + ' - ' + msg;
 	}
 
 	updateDistanceMonument(idMonument, distance) {
@@ -158,7 +154,7 @@ export class MapComponent implements OnInit {
 		return `distancia: ${distance}m`;		
 	}
 
-	renderMarker({ location, title = '', snippet = '', icon = 'place'}) {
+	renderMarker({ location, title = '', snippet = '', icon = 'flag'}) {
 		let marker = new Marker();		
 		marker.position = Position.positionFromLatLng(location.latitude, location.longitude);		
 		marker.title = title;

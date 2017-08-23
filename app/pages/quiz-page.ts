@@ -10,6 +10,7 @@ import 'rxjs/add/operator/take';
 
 
 import * as fromRoot from '../shared/reducers';
+import { UserService } from '../shared/user.service';
 import { Monument } from '../shared/models/monument'
 
 @Component({
@@ -25,7 +26,7 @@ import { Monument } from '../shared/models/monument'
     <side-drawer-page>
     <StackLayout height="100%">
       <quiz 
-        [quiz]="(monument$ | async).quiz" 
+        [quiz]="monument.quiz" 
         (setAchievement)="setAchievement()">
       </quiz>
 		</StackLayout>
@@ -33,17 +34,21 @@ import { Monument } from '../shared/models/monument'
   `
 })
 export class QuizPageComponent implements OnInit{
-  monument$: Observable<Monument>;
+  monument: Monument;
   timer$: Observable<number>;
   subscription: Subscription;
   win;
   
-  constructor(private store: Store<fromRoot.State>, private routerExtensions: RouterExtensions) {
-    this.monument$ = this.store.select(fromRoot.getSelectedMonument);
+  constructor(
+    private store: Store<fromRoot.State>, 
+    private routerExtensions: RouterExtensions,
+    private userService: UserService
+  ) {
     this.win = false;
   }
 
   ngOnInit() {
+    this.getMonumentSelected();
     const start = 30;
     this.timer$ = Observable
       .timer(1000,1000)
@@ -52,9 +57,16 @@ export class QuizPageComponent implements OnInit{
 
       this.subscription = this.timer$.subscribe(null, null, () => {
         dialogs.alert({
-          title: 'Fin del juego pringado',
-          message: `Lo siento se te ha pasado el tiempo...`
+          title: 'Fin del juego',
+          message: `Lo siento se te ha pasado el tiempo, vuelve a intentarlo`
         }).then(e => this.goBack());
+      });
+  }
+
+  getMonumentSelected() {
+    this.store.select(fromRoot.getSelectedMonument)
+      .subscribe(e => {
+        this.monument = e;        
       });
   }
 
@@ -63,9 +75,13 @@ export class QuizPageComponent implements OnInit{
     this.win = true;
     dialogs.alert({
       title: '¡Enhorabuena!, Logro conseguido',
-      message: `Ahora dispones del logro en tu perfil y se te mostrará en el mapa como conseguido`
+      message: `Ahora dispones del logro "${this.monument.quizAchievement}" en tu perfil y se te mostrará en el mapa como conseguido`
     }).then(e => this.goBack());
-    console.log('Logro conseguidooooo!!!');
+    this.userService.addAchievement({
+      id: this.monument.id,
+      name: this.monument.quizAchievement,
+      image: 'res://medal'
+    });
   }
 
   goBack() {

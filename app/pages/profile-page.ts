@@ -54,7 +54,6 @@ import { USER_SET_NAME } from '../shared/reducers/user';
 export class ProfileComponent {
 	
 	user$: Observable<User>;
-	// achievements$: Observable<Achievement>;
 	
 	constructor(private store: Store<fromRoot.State>, private userService: UserService) { 
 			this.user$ = this.store.select('user');

@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
@@ -18,9 +18,9 @@ import { User } from '../models/user';
   templateUrl: 'shared/side-drawer-page/side-drawer-page.component.html',
   styleUrls: ['shared/side-drawer-page/side-drawer-page.component.css']
 })
-export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
+export class SideDrawerPageComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild(RadSideDrawerComponent) drawerComponent: RadSideDrawerComponent;
-  user$: Observable<User>;
+  user: User;
 
   /**
    * On tap of any side-drawer item, hiding content if this flag is true.
@@ -52,9 +52,15 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
     private ngZone: NgZone,
     private store: Store<fromRoot.State>
   ) {
-    this.user$ = store.select('user');
+    
     this.setActionBarIcon(this.page);
     this.setDrawerTransition();
+  }
+
+  ngOnInit() {
+    this.store.select('user').subscribe((e: User) => {
+      this.user = e;
+    });
   }
 
   ngAfterViewInit() {
@@ -126,5 +132,9 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy {
 
   private toggleDrawer() {
     this.drawer.toggleDrawerState();
+  }
+
+  msgAchievements() {
+    return `${this.user.achievements.length} monumentos conquistados`
   }
 }

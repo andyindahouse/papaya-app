@@ -29,7 +29,7 @@ import { Question } from '../shared/models/question';
         [items]="quiz">
       <ng-template let-item="item" let-i="index">
         <StackLayout>
-          <Label [text]="item.question"></Label>
+          <Label textWrap="true" [text]="item.question"></Label>
           <Button
             [class.selected]="iButton === selecteds[i]"
             *ngFor="let response of item.responses; let iButton=index" 

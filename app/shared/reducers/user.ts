@@ -11,10 +11,7 @@ export interface State {
 
 export const initialState: State = {
   name: 'Papayo',  
-  achievements: [
-    { name: 'Medalla 1', image: 'res://pizza' },
-    { name: 'Medalla 2', image: 'res://pizza' }     
-  ],
+  achievements: [],
   idMonumentsVisited: []
 };
 
