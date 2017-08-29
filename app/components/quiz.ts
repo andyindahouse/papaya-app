@@ -7,31 +7,48 @@ import { Question } from '../shared/models/question';
 @Component({
   selector: 'quiz',
   styles: [`
-    .selected {
-      background-color: blue;
+    .question-label {
+      color: white;
+      font-size: 16;
+      padding: 10;
+      background-color: #5C546A;
     }
 
-    .quiz__toValidate {
-      background-color: red;
+    .button-validate {
+      background-color: #4082FD;
+      color: white;
     }
 
-    .quiz_validate {
+    .button-response {
+      background-color: white;
+      color: black;
+      border-color: transparent;
+      border-width: 1;
+    }
+
+    .button-response--selected {
+      background-color: #00ABFF;
+      color: white;
+    }
+
+    .layout-validate {
       height: 10%;
     }
     
-    .quiz_questions {
+    .layout-questions {
       height: 90%;
     }
   `],
   template: `
-  <StackLayout class="quiz_questions">
+  <StackLayout class="layout-questions">
     <ListView
         [items]="quiz">
       <ng-template let-item="item" let-i="index">
         <StackLayout>
-          <Label textWrap="true" [text]="item.question"></Label>
+          <Label class="question-label" textWrap="true" [text]="item.question"></Label>
           <Button
-            [class.selected]="iButton === selecteds[i]"
+            class="button-response"
+            [class.button-response--selected]="iButton === selecteds[i]"
             *ngFor="let response of item.responses; let iButton=index" 
             [text]="response" 
             (tap)="onTap($event, i, iButton)">
@@ -40,9 +57,9 @@ import { Question } from '../shared/models/question';
       </ng-template>
     </ListView>
   </StackLayout>
-  <StackLayout class="quiz_validate">
+  <StackLayout class="layout-validate">
     <Button
-      class="quiz__toValidate"
+      class="button-validate"
       text="Validar respuestas" 
       (tap)="validateRes()">
     </Button>

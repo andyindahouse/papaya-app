@@ -21,8 +21,8 @@ import { Monument } from '../shared/models/monument'
     }
   `],
   template: `
-    <ActionBar *ngIf="!this.win" title="Tienes {{timer$ | async}}seg para resolverlo"></ActionBar>
-    <ActionBar *ngIf="this.win" title="¡Reto superado!"></ActionBar>    
+    <ActionBar *ngIf="!this.win" title="Cuenta atrás: {{timer$ | async}} seg"></ActionBar>
+    <ActionBar *ngIf="this.win" title="¡Reto superado!"></ActionBar>
     <side-drawer-page>
     <StackLayout height="100%">
       <quiz 
@@ -49,7 +49,7 @@ export class QuizPageComponent implements OnInit{
 
   ngOnInit() {
     this.getMonumentSelected();
-    const start = 30;
+    const start = 90  ;
     this.timer$ = Observable
       .timer(1000,1000)
       .map(i => start - i)

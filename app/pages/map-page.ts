@@ -97,25 +97,33 @@ export class MapComponent {
 		if(this.watchId) geolocation.clearWatch(this.watchId);
 		this.watchId = geolocation.watchLocation(loc => {
 			this.currentLocation = loc;
+			const monumentsShown = [];			
 			this.monumentIdsAndMarkers.forEach(({ id, marker, location}) => {
 				const distance = this.getMonumentDistance(location);					
 				this.updateMarkers(marker, distance);
-				this.updateDistanceMonument(id, distance);
+				monumentsShown.push({
+					id,
+					distance
+				});
 			});
-
+			this.updateDistanceMonument(monumentsShown);
     }, (e) => {
       console.log("Error refresh location: " + e.message);
-    }, {desiredAccuracy: Accuracy.high, updateDistance: 3, minimumUpdateTime : 1000});
+    }, {desiredAccuracy: Accuracy.high, updateDistance: 10, minimumUpdateTime : 3000});
 	}
 
 	setMonumentsLocation() {
 		const dataSub = this.store.select(fromRoot.getMonumentsValues)
 			.take(1)		
 			.subscribe(monuments => {
-				monuments.forEach(e => {
+				console.log(monuments);
+				const monumentsShown = [];
+				monuments.forEach((e, i, arr) => {
+					console.log(arr);					
+					console.log(e.name);
 					const distance = this.getMonumentDistance(e.location);				
 					const marker = this.renderMarker({
-						location: e.location,
+						location: e.location,						
 						title: e.name,
 						snippet: this.formatDistance(distance)
 					});
@@ -123,9 +131,13 @@ export class MapComponent {
 						id: e.id,
 						location: e.location,
 						marker
-					});
-					this.updateDistanceMonument(e.id, distance);
+					});			
+					monumentsShown.push({
+						id: e.id,
+						distance
+					});	
 				});
+				this.updateDistanceMonument(monumentsShown);
 			});
 	}
 
@@ -142,8 +154,8 @@ export class MapComponent {
 
 	}
 
-	updateDistanceMonument(idMonument, distance) {
-		this.store.dispatch({ type: MONUMENTS_UPDATE_DISTANCE, payload: { id: idMonument, distance }});
+	updateDistanceMonument(monumentsShown) {
+		this.store.dispatch({ type: MONUMENTS_UPDATE_DISTANCE, payload: monumentsShown });
 	}
 
 	getMonumentDistance(monumentLocation: Location) {
