@@ -47,14 +47,14 @@ export const monuments = [
       responses: ['1. La estatua de Miguel de Cervantes', '2. La estatua de Miguel de Cervantes y el Quiosco de la Música', '3. La estatua de Miguel de Cervantes, el Quiosco de la Música y la Torre de Santa María']
     }, {
       question: 'En la barandilla del Quiosco de la Música podemos apreciar:',
-      indexResponseCorrect: 3,
+      indexResponseCorrect: 0,
       responses: ['Instrumentos musicales: una lira y dos trompetas', 'Elementos religiosos', 'Ambas son correctas']
     }, {
       question: 'La estatua de Miguel de Cervantes es de…',
       indexResponseCorrect: 0,
       responses: ['Bronce', 'Oro', 'Hierro']
     }, {
-      question: '¿Qué elementos podemos encontrar en el monumento a Miguel de Cernvantes?',
+      question: '¿Qué elementos podemos encontrar en el monumento a Miguel de Cervantes?',
       indexResponseCorrect: 2,
       responses: ['Una pluma y un libro', 'Una pluma y una espada', 'Una pluma, una espada e ilustraciones que representan varias escenas de Don Quijote de la Mancha']
     }],

@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import { User } from '../models/user';
+import { ROOT_NAME } from '../../app.component';
 
 @Component({
   selector: 'side-drawer-page',
@@ -21,7 +22,7 @@ import { User } from '../models/user';
 export class SideDrawerPageComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild(RadSideDrawerComponent) drawerComponent: RadSideDrawerComponent;
   user: User;
-
+  rootName;
   /**
    * On tap of any side-drawer item, hiding content if this flag is true.
    */
@@ -37,10 +38,10 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy, OnInit
    */
   navMenu: any[] = [
     { name: 'Mapa', commands: ['/'] },
-    { name: 'Puntos interes', commands: ['/monuments'] },
-    { name: 'Perfil', commands: ['/profile'] },
-    { name: '[oculta] Load Monu', commands: ['/load-monu'] },
-    { name: 'Feedback', commands: ['/feedback'] }
+    { name: 'Puntos interés', commands: ['/monuments'] },
+    { name: 'Perfil y logros', commands: ['/profile'] },
+   // { name: '[oculta] Load Monu', commands: ['/load-monu'] },
+   // { name: 'Feedback', commands: ['/feedback'] }
   ];
 
   private drawer: SideDrawerType;
@@ -59,8 +60,9 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy, OnInit
 
   ngOnInit() {
     this.store.select('user').subscribe((e: User) => {
-      this.user = e;
+      this.user = e;      
     });
+    this.rootName = ROOT_NAME;
   }
 
   ngAfterViewInit() {

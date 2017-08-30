@@ -12,7 +12,7 @@ import { Monument } from '../shared/models/monument'
     <side-drawer-page>
     <ScrollView>
       <StackLayout>
-        <detail-monument [monument]="monument$ | async"></detail-monument>
+        <detail-monument [monument]="monument$ | async" [user]="user$ | async"></detail-monument>
       </StackLayout>
     </ScrollView>
     </side-drawer-page>
@@ -21,8 +21,10 @@ import { Monument } from '../shared/models/monument'
 
 export class DetailMonumentPageComponent {
   monument$: Observable<Monument>;
+  user$: Observable<Monument>;
 
   constructor(private store: Store<fromRoot.State>) { 
     this.monument$ = this.store.select(fromRoot.getSelectedMonument);
-   }  
+    this.user$ = this.store.select('user');
+  }  
 }

@@ -10,56 +10,65 @@ import { User } from '../shared/models/user';
 import { UserService } from '../shared/user.service';
 import { Achievement } from '../shared/models/achievement';
 import { USER_SET_NAME } from '../shared/reducers/user';
+import { ROOT_NAME } from '../app.component';
 
 @Component({
 	selector: 'pay-profile',
 	styles: [`
-		ListView {
-			height: 100%;
-		}
-
 		.name-layout {
-			height: 10%;
-			background-color: green;
+			height: 15%;
+			margin-top: 20;
 			text-align: center;
 			justify-content: center;
 			align-items: center;
 		}
 
-		.medals-layout {
-			width: 100%;
-		}
-
 		.items-layout {
-			width: 30%;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;	
-			background-color: yellow;			
+			height: 85%;
+			flex-direction: row;
+			align-items: center;			
+			flex-wrap: wrap;
 		}
 		
+		.item-layout {
+			padding: 25;
+			width: 50%;
+		}
+
 		.name-label {
 			color: black;
-			font-size: 17;
-			font-weight: 500;
-			background-color: red;
-			height: 20;
+			margin-right: 5;
+			font-size: 24;
+			font-weight: 600;
+		}
+
+		.neither-label {
+			color: #527992;
+			font-size: 16;
+			font-weight: 600;
+			margin: 25;
+		}
+
+		.medal-label {
+			color: black;
 		}
 
 	`],
 	template: `
-		<ActionBar title="Perfil"></ActionBar>
+		<ActionBar title="Perfil y logros"></ActionBar>
 		<side-drawer-page>
+			<ScrollView>
 			<StackLayout>
 				<FlexboxLayout class="name-layout">
-					<Label 
+					<Label
+						textWrap="true"
 						class="name-label" 
 						[text]="(user$ | async).name">
 					</Label>
 					<Image 
-						backgroundColor="blue"
+						class="pencil-icon"
 						(tap)="editUserName()"	
-						src="res://ic_mode_edit_black_36dp" 
+						src="res://pencil" 
 						stretch="none">
 					</Image>
 				</FlexboxLayout>
@@ -72,21 +81,25 @@ import { USER_SET_NAME } from '../shared/reducers/user';
 					<Label 
 						*ngIf="!(user$ | async).achievements" 
 						text="Completa los desafíos de los monumentos para desbloquear logros">
+						</Label>
+					</StackLayout>
+					<Label 
+						class="neither-label" 
+						textWrap="true"
+						*ngIf="(user$ | async).achievements.length === 0"
+						text="No has conseguido nungún logro todavía">
 					</Label>
-				</StackLayout>
-				<GridLayout class="medals-layout" columns="30, 30, 30" rows="auto, *" >					
-					<ListView
-						backgroundColor="pink"
-						[items]="(user$ | async).achievements">
-						<ng-template let-achievement="item">
-							<FlexboxLayout class="item-layout">
-								<Image src="{{achievement.image}}" stretch="none"></Image>
-								<Label class="primary-label" [text]="achievement.name"></Label>
-							</FlexboxLayout>
-						</ng-template>
-					</ListView>
-				</GridLayout>
+					<FlexboxLayout class="items-layout">
+						<StackLayout 
+							*ngFor="let achievement of (user$ | async).achievements" 
+							class="item-layout" 
+							orientation="vertical">
+							<Image horizontalAlignment="center" src="res://academics" stretch="none"></Image>
+							<Label horizontalAlignment="center" textWrap="true" class="medal-label" [text]="achievement.name"></Label>
+						</StackLayout>
+					</FlexboxLayout>
 			</StackLayout>
+			</ScrollView>
 		</side-drawer-page>
 	`
 })
@@ -101,15 +114,24 @@ export class ProfileComponent {
 	editUserName() {
 		console.log('tap user');
 		dialogs.prompt({
-			title: '¡Vamos a cambiar tu nombre!',
+			title: 'Editar nombre',
 			message: 'Elige tu nuevo nombre de usuario',
 			okButtonText: 'Aceptar'
 		})
 		.then(r => {
 			if (r.result) {
 				const name = r.text ? r.text : 'Unnamed';
+				if(name === ROOT_NAME) this.isRoot();				
 				this.userService.setName(name);
 			}
 		});
- 	}
+	}
+
+	isRoot() {
+		dialogs.alert({
+			title: '¡Enhorabuena!',
+			message: `Has desbloqueado el modo 'Don Quijote', ahora podras acceder a las actividades desde cualquier sitio.`
+		});
+	}
+	 
 }

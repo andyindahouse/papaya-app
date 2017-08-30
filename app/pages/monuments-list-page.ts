@@ -16,7 +16,7 @@ import { Monument } from '../shared/models/monument';
 		}
 	`],
 	template: `
-		<ActionBar title="Puntos de interes"></ActionBar>
+		<ActionBar title="Puntos de interés"></ActionBar>
 		<side-drawer-page>
 			<StackLayout height="100%">			
 				<ListView

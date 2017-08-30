@@ -58,7 +58,7 @@ export class QuizPageComponent implements OnInit{
       this.subscription = this.timer$.subscribe(null, null, () => {
         dialogs.alert({
           title: 'Fin del juego',
-          message: `Lo siento se te ha pasado el tiempo, vuelve a intentarlo`
+          message: `Lo siento, el tiempo ha finalizado. Vuelve a intentarlo`
         }).then(e => this.goBack());
       });
   }
@@ -75,7 +75,7 @@ export class QuizPageComponent implements OnInit{
     this.win = true;
     dialogs.alert({
       title: '¡Enhorabuena!, Logro conseguido',
-      message: `Ahora dispones del logro "${this.monument.quizAchievement}" en tu perfil y se te mostrará en el mapa como conseguido`
+      message: `Ahora dispones del logro "${this.monument.quizAchievement}" en tu perfil`
     }).then(e => this.goBack());
     this.userService.addAchievement({
       id: this.monument.id,

@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Monument } from '../shared/models/monument';
+import { User } from '../shared/models/user';
+import { ROOT_NAME } from '../app.component';
 
 @Component({
   selector: 'detail-monument',
@@ -28,10 +30,16 @@ import { Monument } from '../shared/models/monument';
       margin-top: 15;
       margin-bottom: 15;      
       font-size: 14;
+      text-align: none;
     }
 
     .info-label {
       color: #FF4F19;
+    }
+
+    .achievement-label {
+			font-size: 12;      
+      color: #00ABFF;
     }
 
     .button {
@@ -50,32 +58,43 @@ import { Monument } from '../shared/models/monument';
     <StackLayout class="main-layout">
       <Image src="{{monument.image}}"></Image>
       <StackLayout class="secondary-layout">      
-      <Label class="primary-label" [text]="monument.name"></Label>
-      <Label class="secondary-label" [text]="labelDistance"></Label>    
-      <Label class="description-label" textWrap="true" [text]="monument.desc"></Label>
-      <Label class="info-label" *ngIf="monument.distance > 20" textWrap="true" [text]="msgDistance"></Label>
-      <Button 
-        class="button"
-        text="¡Empieza la actividad!" 
-        [nsRouterLink]="['./quiz']" 
-        pageTransition="flip">
+        <Label class="primary-label" [text]="monument.name"></Label>
+        <Label class="secondary-label" [text]="labelDistance"></Label>    
+        <Label class="achievement-label" textWrap="true" [text]="msgAchievement"></Label>                    
+        <Label class="description-label" horizontalAlignment="center" textWrap="true" [text]="monument.desc"></Label>
+        <Label class="info-label" *ngIf="(!monument.distance || monument.distance > 20) &&  user.name !== rootName" textWrap="true" [text]="msgDistance"></Label>
+        <Label textWrap="true" *ngIf="user.name === rootName" class="achievement-label" text="Modo Don Quijote desbloqueado, puedes acceder a la actividad"></Label>
+        <Button 
+          class="button"
+          isEnabled="{{(!monument.distance && monument.distance <= 20) || user.name === rootName}}"
+          text="¡Empieza la actividad!" 
+          [nsRouterLink]="['./quiz']" 
+          pageTransition="flip">
         </Button>
-        </StackLayout>      					
-        </StackLayout>
-        `
-      })
-      
-      export class DetailMonumentComponent {
-        @Input() monument: Monument;
-        
-        // isEnabled="{{monument.distance <= 20}}"
+      </StackLayout>      					
+    </StackLayout>
+    `
+  })      
+export class DetailMonumentComponent implements OnInit {
+  @Input() monument: Monument;
+  @Input() user: User;
+  rootName;
+
   constructor() {}
   
+  ngOnInit() {
+    this.rootName = ROOT_NAME;
+  }
+
   get msgDistance() {
-    return `Acercate un poco más al punto de interes, necesitas estar a menos de 20 metros para poder empezar la actividad`;
+    return `Acercate un poco más al punto de interés. Recuerda que necesitas estar a menos de 20 metros para poder empezar la actividad.`;
   }
 
   get labelDistance() {
     return `A ${this.monument.distance} metros`;
+  }
+
+  get msgAchievement() {
+    return `Con esta actividad ganarás el logro: ${this.monument.quizAchievement}`;
   }
 }

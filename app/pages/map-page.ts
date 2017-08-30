@@ -71,7 +71,7 @@ export class MapComponent {
 			})
 			.catch(e => {
 				dialogs.alert({
-					title: 'Ops...',
+					title: 'Oh, vaya :(',
 					message: 'Nuestro mapa requiere de tu localización para mostrarte los monumentos cercanos, sin ello solamente tendrás acceso a ciertas funcionalidades'
 				});
 				console.log("Permission is not granted (sadface)");
@@ -79,6 +79,7 @@ export class MapComponent {
 	}
 
 	setCurrentLocation() {
+
 		geolocation.getCurrentLocation({ desiredAccuracy: Accuracy.high, updateDistance: 10, timeout: 30000 })
 			.then((e: Location) => {
 				this.currentLocation = e;
@@ -87,8 +88,8 @@ export class MapComponent {
 			})
 			.catch(e => {
 				dialogs.alert({
-					title: 'Ops...',
-					message: 'No hemos podido localizarte, asegurate de que tu GPS funciona correctamente'
+					title: 'Oh, vaya :(',
+					message: 'No hemos podido localizarte, asegúrate de que tu GPS funciona correctamente'
 				});
 			});
 	}

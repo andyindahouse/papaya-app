@@ -9,6 +9,8 @@ import { USER_SET_NAME } from './shared/reducers/user';
 import { MonumentsService } from './shared/monuments.service';
 import { UserService } from './shared/user.service';
 
+export const ROOT_NAME = 'Don Quijote';
+
 @Component({
   selector: "my-app",
   template: '<page-router-outlet></page-router-outlet>'
@@ -31,15 +33,25 @@ export class AppComponent implements OnInit {
               message: '¿Cómo quieres que te llame?',
               defaultText: 'Papayito',
               okButtonText: 'Aceptar',
-              cancelButtonText: 'Más tardeeeee'
+              cancelButtonText: 'Más tarde'
             })
             .then(r => {
               if(r.result) {
                 const name = r.text ? r.text : 'Unnamed';
+                if(name === ROOT_NAME){
+                  this.isRoot();                                    
+                }
                 this.userService.setName(name);
               }
             });
         }
       });
+  }
+
+  isRoot() {
+    dialogs.alert({
+      title: '¡Enhorabuena!',
+      message: `Has desbloqueado el modo 'Don Quijote', ahora podras acceder a las actividades desde cualquier sitio.`
+    })
   }
 }

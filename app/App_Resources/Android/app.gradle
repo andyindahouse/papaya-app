@@ -15,5 +15,5 @@ android {
   }
   project.ext {
     googlePlayServicesVersion = "11.0.+"
-  } 
+  }
 }
