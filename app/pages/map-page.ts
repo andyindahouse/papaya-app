@@ -150,7 +150,7 @@ export class MapComponent {
 			marker.icon = 'target';
 		} else {
 			marker.icon = 'flag';			
-			marker.snippet = this.formatDistance(distance) + ' ' + 'Fuera de alcance';
+			marker.snippet = this.formatDistance(distance) + ' ' + '(fuera de alcance)';
 		}
 
 	}
@@ -164,7 +164,7 @@ export class MapComponent {
 	}
 
 	formatDistance(distance) {
-		return `distancia: ${distance}m`;		
+		return `distancia: ${distance} m`;		
 	}
 
 	renderMarker({ location, title = '', snippet = '', icon = 'flag'}) {

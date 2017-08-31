@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
   isRoot() {
     dialogs.alert({
       title: '¡Enhorabuena!',
-      message: `Has desbloqueado el modo 'Don Quijote', ahora podras acceder a las actividades desde cualquier sitio.`
+      message: `Has desbloqueado el modo 'Don Quijote', ahora podrás acceder a las actividades desde cualquier sitio.`
     })
   }
 }

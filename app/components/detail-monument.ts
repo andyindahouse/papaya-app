@@ -30,7 +30,6 @@ import { ROOT_NAME } from '../app.component';
       margin-top: 15;
       margin-bottom: 15;      
       font-size: 14;
-      text-align: none;
     }
 
     .info-label {

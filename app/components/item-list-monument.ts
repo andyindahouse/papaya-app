@@ -34,7 +34,7 @@ export class ItemListMonumentComponent {
   constructor() { }
 
   get msgDistance() {
-    return `Estas a ${this.monument.distance} metros de este punto de interés`;
+    return `Estás a ${this.monument.distance} metros de este punto de interés`;
   }
 
 }

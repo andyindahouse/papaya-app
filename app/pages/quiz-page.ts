@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable  } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,7 +33,7 @@ import { Monument } from '../shared/models/monument'
     </side-drawer-page>
   `
 })
-export class QuizPageComponent implements OnInit{
+export class QuizPageComponent implements OnInit, OnDestroy{
   monument: Monument;
   timer$: Observable<number>;
   subscription: Subscription;
@@ -61,6 +61,12 @@ export class QuizPageComponent implements OnInit{
           message: `Lo siento, el tiempo ha finalizado. Vuelve a intentarlo`
         }).then(e => this.goBack());
       });
+  }
+
+  ngOnDestroy() {
+    if(!this.subscription.closed) {
+      this.subscription.unsubscribe();
+    }
   }
 
   getMonumentSelected() {

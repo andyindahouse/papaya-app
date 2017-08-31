@@ -38,7 +38,7 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy, OnInit
    */
   navMenu: any[] = [
     { name: 'Mapa', commands: ['/'] },
-    { name: 'Puntos interés', commands: ['/monuments'] },
+    { name: 'Puntos de interés', commands: ['/monuments'] },
     { name: 'Perfil y logros', commands: ['/profile'] },
    // { name: '[oculta] Load Monu', commands: ['/load-monu'] },
    // { name: 'Feedback', commands: ['/feedback'] }
@@ -137,6 +137,9 @@ export class SideDrawerPageComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   msgAchievements() {
-    return `${this.user.achievements.length} monumentos conquistados`
+    if (this.user.achievements.length === 1) {
+      return `1 logro conquistado`      
+    }
+    return `${this.user.achievements.length} logros conquistados`
   }
 }

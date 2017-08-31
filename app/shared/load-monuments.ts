@@ -118,7 +118,7 @@ export const monuments = [
       indexResponseCorrect: 2,
       responses: ['Es de vidriagón', 'Es de madera', 'Está al descubierto']
     }],
-    quizAchievement: ''
+    quizAchievement: 'El graciosillo'
   },
 
   {

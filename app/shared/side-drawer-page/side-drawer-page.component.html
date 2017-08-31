@@ -1,10 +1,10 @@
 <RadSideDrawer [transition]="drawerTransition">
   <StackLayout tkDrawerContent class="sidedrawer-left">
-    <StackLayout class="sidedrawer-header">
+    <StackLayout class="sidedrawer-header" (tap)="navigateTo(['/profile'])">
       <!-- Set src attribute to the logo of the app -->
       <Image class="sidedrawer-header-image"></Image>
       <Label class="sidedrawer-header-brand" [text]="user.name"></Label>
-      <Label class="sidedrawer-header-secondary" [text]="msgAchievements()"></Label>
+      <Label class="sidedrawer-header-secondary" [text]="msgAchievements()"></Label>    
       <Label textWrap="true" *ngIf="user.name === rootName" class="root-label" text="Modo Don Quijote desbloqueado"></Label>
     </StackLayout>
     <ScrollView>
