@@ -65,7 +65,7 @@ import { ROOT_NAME } from '../app.component';
         <Label textWrap="true" *ngIf="user.name === rootName" class="achievement-label" text="Modo Don Quijote desbloqueado, puedes acceder a la actividad"></Label>
         <Button 
           class="button"
-          isEnabled="{{(!monument.distance && monument.distance <= 20) || user.name === rootName}}"
+          isEnabled="{{(monument.distance && monument.distance <= 20) || user.name === rootName}}"
           text="¡Empieza la actividad!" 
           [nsRouterLink]="['./quiz']" 
           pageTransition="flip">

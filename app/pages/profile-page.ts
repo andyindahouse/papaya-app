@@ -43,9 +43,8 @@ import { ROOT_NAME } from '../app.component';
 		}
 
 		.neither-label {
-			color: #527992;
-			font-size: 16;
-			font-weight: 600;
+			color: #777;
+			font-size: 14;
 			margin: 25;
 		}
 
@@ -130,7 +129,7 @@ export class ProfileComponent {
 	isRoot() {
 		dialogs.alert({
 			title: '¡Enhorabuena!',
-			message: `Has desbloqueado el modo 'Don Quijote', ahora podras acceder a las actividades desde cualquier sitio.`
+			message: `Has desbloqueado el modo 'Don Quijote', ahora podrás acceder a las actividades desde cualquier sitio.`
 		});
 	}
 	 
