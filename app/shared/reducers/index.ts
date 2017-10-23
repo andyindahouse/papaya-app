@@ -55,7 +55,7 @@ export interface State {
 const reducers = {
   user: fromUser.reducer,
   monuments: fromMonuments.reducer,
-  logMonitor: fromLogMonitor.reducer
+  //logMonitor: fromLogMonitor.reducer
   // router: fromRouter.routerReducer,
 };
 
@@ -71,77 +71,3 @@ export const getMonuments = (state: State) => state.monuments;
 
 export const getMonumentsValues = createSelector(getMonuments, fromMonuments.getMonuments);
 export const getSelectedMonument = createSelector(getMonuments, fromMonuments.getSelected);
-// /**
-//  * A selector function is a map function factory. We pass it parameters and it
-//  * returns a function that maps from the larger state tree into a smaller
-//  * piece of state. This selector simply selects the `books` state.
-//  *
-//  * Selectors are used with the `select` operator.
-//  *
-//  * ```ts
-//  * class MyComponent {
-//  * 	constructor(state$: Observable<State>) {
-//  * 	  this.booksState$ = state$.select(getBooksState);
-//  * 	}
-//  * }
-//  * ```
-//  */
-// export const getBooksState = (state: State) => state.books;
-
-// /**
-//  * Every reducer module exports selector functions, however child reducers
-//  * have no knowledge of the overall state tree. To make them useable, we
-//  * need to make new selectors that wrap them.
-//  *
-//  * The createSelector function from the reselect library creates
-//  * very efficient selectors that are memoized and only recompute when arguments change.
-//  * The created selectors can also be composed together to select different
-//  * pieces of state.
-//  */
-//  export const getBookEntities = createSelector(getBooksState, fromQuestionary.getEntities);
-//  export const getBookIds = createSelector(getBooksState, fromQuestionary.getIds);
-//  export const getSelectedBookId = createSelector(getBooksState, fromQuestionary.getSelectedId);
-//  export const getSelectedBook = createSelector(getBooksState, fromQuestionary.getSelected);
-
-
-// /**
-//  * Just like with the books selectors, we also have to compose the search
-//  * reducer's and collection reducer's selectors.
-//  */
-// export const getSearchState = (state: State) => state.search;
-
-// export const getSearchBookIds = createSelector(getSearchState, fromUser.getIds);
-// export const getSearchQuery = createSelector(getSearchState, fromUser.getQuery);
-// export const getSearchLoading = createSelector(getSearchState, fromUser.getLoading);
-
-
-// /**
-//  * Some selector functions create joins across parts of state. This selector
-//  * composes the search result IDs to return an array of books in the store.
-//  */
-// export const getSearchResults = createSelector(getBookEntities, getSearchBookIds, (books, searchIds) => {
-//   return searchIds.map(id => books[id]);
-// });
-
-
-
-// export const getCollectionState = (state: State) => state.collection;
-
-// export const getCollectionLoaded = createSelector(getCollectionState, fromMonuments.getLoaded);
-// export const getCollectionLoading = createSelector(getCollectionState, fromMonuments.getLoading);
-// export const getCollectionBookIds = createSelector(getCollectionState, fromMonuments.getIds);
-
-// export const getBookCollection = createSelector(getBookEntities, getCollectionBookIds, (entities, ids) => {
-//   return ids.map(id => entities[id]);
-// });
-
-// export const isSelectedBookInCollection = createSelector(getCollectionBookIds, getSelectedBookId, (ids, selected) => {
-//   return ids.indexOf(selected) > -1;
-// });
-
-// /**
-//  * Layout Reducers
-//  */
-// export const getLayoutState = (state: State) => state.layout;
-
-// export const getShowSidenav = createSelector(getLayoutState, fromLayout.getShowSidenav);
