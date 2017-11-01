@@ -6,3 +6,5 @@ node_modules/
 platforms/
 tmp/
 typings/
+build-apk
+my-release-key.jks
